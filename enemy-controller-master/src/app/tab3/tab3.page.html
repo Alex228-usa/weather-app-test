@@ -1,0 +1,60 @@
+
+<ion-header [translucent]="true">
+    <ion-toolbar>
+        <ion-title>
+            Favorite
+        </ion-title>
+    </ion-toolbar>
+</ion-header>
+
+
+
+
+
+<ion-content>
+    <ion-refresher slot="fixed" (ionRefresh)="doRefresh($event)">
+        <ion-refresher-content></ion-refresher-content>
+    </ion-refresher>
+    <ion-list>
+        <ion-item>
+            <ion-grid class="ion-padding-top">
+                <ion-row *ngFor="let fv of fav" class="ion-padding-top">
+                    <ion-col size="4">
+                        <small><ion-icon name="calendar-outline"></ion-icon>
+                        {{fv.date|date:'dd MMM yyyy'}} <br> 
+                        <ion-icon  name="time-outline"></ion-icon>
+                           {{fv.date|date:'HH:mm '}}</small>
+                    </ion-col>
+                    <ion-col size="3">
+                        <ion-label>
+                            {{fv.main}} <br/> <small>({{fv.desc}})</small>
+                        </ion-label>
+                    </ion-col>
+                    <ion-col size="3">
+                        <ion-label class="ion-padding-top" color="danger" *ngIf="fv.temp > 25">
+                            <small>{{ fv.temp }} °C</small>
+                        </ion-label>
+
+                        <ion-label class="ion-padding-top" color="success" *ngIf="fv.temp >= 20 && fv.temp <= 25">
+                            <small>{{ fv.temp }} °C</small>
+                        </ion-label>
+
+                        <ion-label class="ion-padding-top" color="primary" *ngIf="fv.temp < 20">
+                            <small>{{ fv.temp }} °C</small>
+                        </ion-label>
+                    </ion-col>
+                    <ion-col size="2">
+                        <img class="ion-margin-bottom" src="https://openweathermap.org/img/wn/{{fv.icon}}@2x.png"/>
+                    </ion-col>
+                </ion-row>
+                
+            </ion-grid>
+        </ion-item>
+    </ion-list>
+    <ion-fab vertical="bottom" horizontal="end" slot="fixed">
+        <ion-fab-button  (click)="delete()" color="danger">
+            <ion-icon name="trash-outline"></ion-icon>
+        </ion-fab-button>
+    </ion-fab>
+</ion-content>
+
